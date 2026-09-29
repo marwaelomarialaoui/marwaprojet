@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - Alexsys Solutions</title>
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+    <style>
+        /* Reset basique */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: "Segoe UI", sans-serif;
+        }
+
+        header {
+          background-color: rgba(72, 118, 163, 1);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 30px;
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          height: 70px;
+          z-index: 1000;
+        }
+
+        .logo-container {
+          display: flex;
+          align-items: center;
+        }
+
+        header h1 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: bold;
+        }
+
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        nav {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+        }
+
+        nav a {
+          color: white;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: 500;
+          transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+          color: #cce6ff;
+        }
+
+        .btn-contact {
+          background-color: rgba(66, 111, 156, 1);
+          color: white;
+          padding: 8px 18px;
+          border: none;
+          border-radius: 20px;
+          font-size: 15px;
+          cursor: pointer;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+        }
+
+        .btn-contact:hover {
+          background-color: rgb(107, 157, 206);
+        }
+
+        @media (max-width: 768px) {
+          header {
+            flex-direction: column;
+            align-items: flex-start;
+            height: auto;
+            padding: 20px;
+          }
+
+          .nav-actions {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 10px;
+            width: 100%;
+          }
+
+          nav {
+            flex-direction: column;
+            width: 100%;
+          }
+        }
+
+        /* Main padding to compensate header */
+        main {
+            padding-top: 90px;
+            padding-bottom: 30px;
+        }
+
+        main {
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: calc(100vh - 90px); /* header 70px + padding */
+            background-color: #f9fafb;
+        }
+
+        form {
+            background-color: white;
+            padding: 40px 35px;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            max-width: 500px;
+            width: 100%;
+            font-size: 16px;
+            color: #333;
+            transition: box-shadow 0.3s ease;
+        }
+
+        form:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form select,
+        form textarea,
+        form input[type="file"] {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="email"]:focus,
+        form select:focus,
+        form textarea:focus,
+        form input[type="file"]:focus {
+            border-color: #2978f0;
+            box-shadow: 0 0 8px rgba(41, 120, 240, 0.4);
+            outline: none;
+        }
+
+        form textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            font-size: 16px;
+        }
+
+        form button {
+            margin-top: 35px;
+            width: 100%;
+            padding: 16px 0;
+            background-color: #2978f0;
+            border: none;
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #1f5ecc;
+        }
+
+        /* Zone message d'erreur */
+        #error-message {
+            color: #d93025;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 540px) {
+            main {
+                padding: 20px 15px;
+            }
+            form {
+                padding: 30px 25px;
+            }
+            form label {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <h1><a href="{% url 'index' %}" style="color: white; text-decoration: none;">ALEXSYS SOLUTIONS</a></h1>
+    </div>
+    <div class="nav-actions">
+      <nav>
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'reserver' %}">Réserver</a>
+        <a href="{% url 'temoins' %}">Témoignages</a>
+        <a href="{% url 'blog_list' %}">Blog</a>
+        <a href="{% url 'liste_formations' %}">Nos Formations</a>
+        <a href="{% url 'admin_panel' %}">Admin </a>
+        <a href="{% url 'mes_reservations' %}">Voir mes réservations</a>
+        <a href="{% url 'dashboard' %}">user</a>
+      </nav>
+      <a href="{% url 'contact' %}" class="btn-contact">📞 Nous Contacter</a>
+    </div>
+  </header>
+
+<main>
+<form method="POST" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <label for="id_nom">Nom</label>
+    <input id="id_nom" type="text" name="nom" required placeholder="Votre nom complet">
+
+    <label for="id_email">Email</label>
+    <input id="id_email" type="email" name="email" required placeholder="exemple@mail.com">
+
+    <label for="id_sujet">Sujet</label>
+    <input id="id_sujet" type="text" name="sujet" required placeholder="Sujet de votre message">
+
+    <label for="id_type_demande">Type de demande</label>
+    <select id="id_type_demande" name="type_demande" required>
+        <option value="" disabled selected>-- Sélectionnez --</option>
+        <option value="contact">Message de contact</option>
+        <option value="stage">Demande de stage</option>
+        <option value="cv">Envoi de CV</option>
+    </select>
+
+    <label for="id_message">Message</label>
+    <textarea id="id_message" name="message" placeholder="Votre message ici..."></textarea>
+
+    <label for="id_cv">CV (PDF ou Word)</label>
+    <input id="id_cv" type="file" name="cv" accept=".pdf,.doc,.docx">
+
+    <div id="error-message"></div>
+
+    <button type="submit">Envoyer</button>
+</form>
+</main>
+
+<script>
+  document.querySelector('form').addEventListener('submit', function(event) {
+    const nom = document.getElementById('id_nom').value.trim();
+    const email = document.getElementById('id_email').value.trim();
+    const sujet = document.getElementById('id_sujet').value.trim();
+    const typeDemande = document.getElementById('id_type_demande').value;
+
+    let errorMsg = '';
+
+    if (!nom) {
+      errorMsg += 'Veuillez remplir le champ Nom.<br>';
+    }
+    if (!email) {
+      errorMsg += 'Veuillez remplir le champ Email.<br>';
+    } else {
+      // Simple vérification email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errorMsg += 'Veuillez saisir une adresse email valide.<br>';
+      }
+    }
+    if (!sujet) {
+      errorMsg += 'Veuillez remplir le champ Sujet.<br>';
+    }
+    if (!typeDemande) {
+      errorMsg += 'Veuillez sélectionner un type de demande.<br>';
+    }
+
+    if (errorMsg) {
+      event.preventDefault(); // stop form submit
+      document.getElementById('error-message').innerHTML = errorMsg;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      document.getElementById('error-message').innerHTML = '';
+    }
+  });
+</script>
+
+</body>
+</html>

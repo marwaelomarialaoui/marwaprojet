@@ -1,0 +1,102 @@
+{% extends 'home/base.html' %}
+
+{% block title %}{{ form.instance.id|yesno:"Modifier,Ajouter" }} Formation{% endblock %}
+
+{% block content %}
+<style>
+/* Container centré et stylé */
+.container-form {
+    max-width: 700px;
+    margin: 40px auto 80px auto;
+    background-color: #f9fbfe;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre du formulaire */
+.container-form h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+}
+
+/* Inputs et textarea */
+.container-form input[type="text"],
+.container-form input[type="number"],
+.container-form input[type="date"],
+.container-form input[type="file"],
+.container-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.container-form input:focus,
+.container-form textarea:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 5px rgba(30, 58, 138, 0.3);
+    outline: none;
+}
+
+/* Bouton submit */
+.btn-primary {
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.6);
+}
+
+/* Labels stylés */
+.container-form label {
+    font-weight: 600;
+    color: #1e3a8a;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+</style>
+
+<div class="container-form">
+    <h2>{{ form.instance.id|yesno:"Modifier,Ajouter" }} Formation</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="color:#555;">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div style="color:#c0392b; font-size:13px;">{{ error }}</div>
+                {% endfor %}
+                
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+{% endblock %}
+

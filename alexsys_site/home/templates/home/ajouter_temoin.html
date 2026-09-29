@@ -1,0 +1,7 @@
+<h2>Laisser un témoignage</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Envoyer</button>
+</form>
+<p>Merci, votre témoignage est en attente de validation par l'admin.</p>

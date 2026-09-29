@@ -1,0 +1,88 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Gérer les Réservations{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'home/style.css' %}">
+<style>
+  .admin-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  h1.text-center {
+    margin-bottom: 30px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  .btn-action {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+  }
+  .btn-accepter { background-color: #28a745; }
+  .btn-refuser { background-color: #dc3545; }
+  .btn-modifier { background-color: #ffc107; color: black; }
+  .status-pending { color: orange; font-weight: bold; }
+  .status-accepted { color: green; font-weight: bold; }
+  .status-rejected { color: red; font-weight: bold; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+  <h1 class="text-center">Gérer les Réservations</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Date</th>
+        <th>Objet</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reservations %}
+      <tr>
+        <td>{{ r.nom }}</td>
+        <td>{{ r.email }}</td>
+        <td>{{ r.date }}</td>
+        <td>{{ r.objet }}</td>
+        <td class="status-{{ r.status }}">{{ r.status|title }}</td>
+        <td>
+          <a href="{% url 'reservation_accept' r.pk %}" class="btn-action btn-accepter">✅ Accepter</a>
+          <a href="{% url 'reservation_decline' r.pk %}" class="btn-action btn-refuser">❌ Refuser</a>
+          <a href="{% url 'reservation_edit' r.pk %}" class="btn-action btn-modifier">✏️ Modifier</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6">Aucune réservation pour le moment.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,1283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEXSYS SOLUTIONS</title> 
+    <link rel="stylesheet" href="{% static 'home/css/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            scroll-behavior: smooth;
+            background-color:rgba(254, 255, 251, 1);
+        }
+
+        header {
+             background-color:rgba(72, 118, 163, 1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+           padding: 10px 30px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            z-index: 1000;
+        }
+          
+        header img.logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .btn-voir-plus {
+          background-color: rgba(66, 111, 156, 1);
+           display: inline-block;
+         color: white;
+          padding: 12px 25px;
+          border: none;
+          border-radius: 25px;
+          font-size: 16px;
+          cursor: pointer;
+          text-decoration: none;
+         transition: 0.3s ease;
+         margin-top:  100px; /* ← ici on remonte */
+        }
+        .btn-voir-plus:hover {
+           background-color: rgb(107, 157, 206) ;
+        }
+        
+        main {
+            margin-top: 70px; /* Pour ne pas cacher le contenu sous le header */
+            padding: 20px 30px;
+             margin-top: 70px;
+        } 
+        .main-title {
+            text-align: center;
+           font-size: 48px;
+          font-weight: bold;
+         margin-top: 50px;
+           color: #333;
+        }
+        .hero {
+          background: url('/static/images/hero.jpg') center/cover no-repeat;
+          height: 90vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: white;
+          position: relative;
+        }
+        .hero::after {
+         content: "";
+         position: absolute;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          
+        }
+        .hero-content {
+         position: relative;
+         z-index: 1;
+        }
+
+        .hero h1 span {
+           color: #060606ff;
+        }
+        .btn {
+    padding: 12px 25px;
+    background-color: #00C896;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+}
+html {
+  scroll-behavior: smooth;
+}
+.scroll-down-arrow {
+    display: inline-block;
+    margin-top: 50px;
+    animation: bounce 1.8s infinite;
+    text-align: center;
+    transition: transform 0.3s;
+     cursor: pointer
+}
+
+.scroll-down-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* ⬅️ Ajuste ici pour faire descendre la flèche plus bas */
+}
+
+.scroll-arrow {
+  font-size: 2.5rem;
+  color: #000;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.scroll-arrow:hover {
+  transform: scale(1.2);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.about {
+    background-color: white;
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.about span {
+    font-size: 20px;
+    color: #5276a5;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.about p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+
+.about, .testimonials {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.testimonial-box {
+    background: white;
+    padding: 20px;
+    margin: 15px auto;
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.footer {
+  background-color: rgba(47, 93, 138, 1);
+  color: #ddd;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-about, .footer-links, .footer-contact {
+  flex: 1 1 300px;
+  margin: 15px;
+}
+
+.footer-about h3,
+.footer-links h4,
+.footer-contact h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #00aaff;
+}
+
+.footer-contact p {
+  margin: 8px 0;
+}
+
+.footer-social a {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #00aaff;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+  font-size: 14px;
+  color: #aaa;
+}
+
+
+
+
+        .hero-image {
+            width: 100%;
+            margin: 30px auto 0 auto; /* centre l'image */
+            width: 90%;               /* adapte la taille à la largeur de l'écran */
+            max-width: 1000px;        /* limite la taille max */
+            max-height: 400px;
+            object-fit: cover;
+            margin-top: 20px;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto
+            box-shadow: 0 4px 12px rgba(138, 56, 56, 0.2);
+             height: auto;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+          
+            text-decoration: underline;
+            
+        }
+       
+
+       
+
+        #accueil {
+            background-color:rgba(153, 146, 146, 1);
+              text-align: center;
+              padding: 50px 20px;
+        }
+       
+
+        #temoignages {
+            border: 2px solid #cbd5e1;
+            background-color: #f9fbfe
+            
+             
+        }
+       
+
+         .container {
+           max-width: 900px;
+           margin: 30px auto;
+           padding: 20px;
+          background-color: white;
+          border-radius: 12px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+         .testimonial {
+            border-left: 5px solid #5276a5ff;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+
+        .testimonial .actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .testimonial .actions button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #36597eff;
+      margin-left: 10px;
+    }
+
+    .testimonial strong {
+      color: #3a5c80ff;
+    }
+
+    .rating {
+      color: gold;
+      margin-bottom: 5px;
+    }
+
+   input, textarea, select {
+         width: 100%;
+          padding: 10px;
+          margin: 10px 0;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+         }
+        button {
+          background-color: #41668dff;
+          color: white;
+          border: none;
+          padding: 12px 20px;
+         border-radius: 8px;
+         cursor: pointer;
+        }
+
+        button:hover {
+         background-color: #0056b3;
+         }
+        .no-comments {
+          color: gray;
+          font-style: italic;
+       }
+          
+        #contact {
+            background-color:rgba(255, 255, 255, 1);
+            padding-top: 100px; 
+        }
+          .contact-section {
+  background-color: #f0f4f8;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+ .contact-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 25px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+.contact-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #2b2b2b;
+}
+
+.contact-subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(72, 118, 163, 1);
+}
+
+.contact-form button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color:rgba(72, 118, 163, 1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #005fa3;
+}
+
+        h2 {
+            margin-top: 0;
+             font-size: 28px;
+            margin-top: 0;
+        }
+
+        .formulaire input, .formulaire textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        ul li {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .formulaire input,
+        .formulaire textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+        .formulaire button {
+            background-color:rgba(55, 85, 115, 1);
+            color: white;
+            padding:  12px 30px;
+             font-size: 18px;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .formulaire button:hover {
+            background-colorrgb(107, 157, 206);
+        }
+
+        .admin-button {
+            margin-top: 30px;
+            display: inline-block;
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .admin-button:hover {
+            background-color: #3498db;
+        }
+
+.full-image {
+  position: relative;
+  margin-top: 70px; /* espace sous le header fixe */
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.full-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* espace entre texte, bouton et flèche */
+}
+
+.overlay-text h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.overlay-text p {
+  font-size: 20px;
+  max-width: 700px;
+}
+
+.btn {
+  padding: 12px 25px;
+  background-color: #e9a91eff;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #112f67ff;
+}
+
+.scroll-down-container {
+  margin-top: 20px;
+}
+
+.scroll-arrow {
+  font-size: 3rem;
+  color: white;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.scroll-arrow:hover {
+  transform: scale(1.2);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(15px); }
+}
+
+/* HEADER NAVBAR */
+header.navbar {
+  background: #345d8c;        /* bleu foncé */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 40px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 70px;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* LOGO */
+header .logo img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+/* TITRE */
+header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 20px;
+  flex-grow: 1;            /* pousse le menu à droite */
+  color: #f1f1f1;
+  letter-spacing: 1px;
+}
+
+/* NAVIGATION */
+header nav {
+  display: flex;
+  gap: 20px;
+}
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s, border-bottom 0.3s;
+  padding-bottom: 3px;
+}
+header nav a:hover {
+  color: #00ffcc;
+  border-bottom: 2px solid #00ffcc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  header.navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 15px;
+  }
+  header h1 {
+    text-align: center;
+    flex: 1 0 100%;
+    margin: 10px 0;
+  }
+  header nav {
+    flex: 1 0 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+}
+
+.hero-slideshow {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-slideshow img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-slideshow img.active {
+  opacity: 1;
+}
+
+.hero-slideshow img {
+  object-fit: cover;
+}
+
+.intro-box {
+    max-width: 950px;
+    margin: 0 auto 60px auto;
+    padding: 35px 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #1f2937;
+    background: linear-gradient(135deg, #ffffff, #f9fafc);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-box::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(59,130,246,0.2), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .intro-box::after {
+    content: "";
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(30,58,138,0.15), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .intro-box p {
+    position: relative;
+    z-index: 2;
+  }
+  .intro-box .btn-decouvrir {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color:#345d8c;; /* bleu */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.intro-box .btn-decouvrir:hover {
+    background-color: #1d5c9fff; /* bleu plus foncé au hover */
+}
+
+  
+
+
+
+    </style>
+</head>
+<body>
+
+ <header class="navbar">
+    <div class="logo">
+        <img src="{% static 'home/images/Logo.png' %}" alt="Logo">
+    </div>
+    <h1>ALEXSYS SOLUTIONS</h1>
+    <nav>
+        <a href="#accueil">Accueil</a>
+        <a href="#temoignages">Témoignages</a>
+        <a href="#contact">Contact</a>
+        <a href="{% url 'admin_panel' %}">Admin</a>
+    </nav>
+</header>
+<!-- Image plein écran après le header -->
+<!-- Image plein écran avec bouton et flèche -->
+<div class="full-image">
+<div class="hero-slideshow">
+    <img src="{% static 'home/images/hero1.png' %}" alt="Image 1" class="active">
+    <img src="{% static 'home/images/hero2.jpg' %}" alt="Image 2">
+    <img src="{% static 'home/images/hero3.jpg' %}" alt="Image 3">
+    <img src="{% static 'home/images/hero4.jpg' %}" alt="Image 4">
+  </div>
+
+  <div class="overlay-text">
+    <h2 id="hero-text">Bienvenue chez <span>ALEXSYS SOLUTIONS</span></h2>
+    <p>Votre partenaire en transformation digitale et formations professionnelles</p>
+    
+    <!-- Bouton Nos solutions -->
+    <a href="{% url 'nos_solutions' %}" class="btn">Nos solutions</a>
+
+    <!-- Flèche scroll down -->
+    <div class="scroll-down-container">
+      <a href="#target-point" class="scroll-arrow">&#8595;</a>
+    </div>
+  </div>
+</div>
+
+<!-- Point cible pour scroll -->
+<div id="target-point" style="position: relative; top: -80px;"></div>
+
+
+  <div class="about" id="about-section">
+        <h2>Ce que nous sommes </h2>
+        <span>ALEXSYS SOLUTIONS</span>
+        <p>Alexsys est un acteur majeur du conseil en technologies innovantes et management pour les entreprises.</p>
+        <p>Nous sommes un véritable "game changer", créant une forte valeur ajoutée pour aider nos clients à gagner leur bataille digitale.</p>
+        <p>Les technologies repoussent sans cesse les limites des champs d’actions. Nos clients peuvent compter sur nous et se laisser guider vers une transformation digitale réussie. Chez Alexsys, nous accomplissons ce parcours en nous efforçant de rester un partenaire de confiance livrant l’autonomisation digitale à nos clients
+
+</p>
+
+    </div>
+<div style="text-align: center; margin-top: -20px; margin-bottom: 40px;">
+  <a href="{% url 'a_propos' %}" class="btn-voir-plus">Découvrir ALEXSYS SOLUTIONS</a>
+</div>
+<div class="intro-box">
+  <p>
+    Découvrez notre catalogue de <strong>formations innovantes</strong>, pensées pour développer vos compétences dans les domaines les plus demandés de l’informatique et du digital. 
+    <br><br>
+     Que vous soyez <em>étudiant</em>, <em>professionnel</em> ou en <em>reconversion</em>, nos programmes allient théorie et pratique afin de vous offrir une expérience d’apprentissage complète et adaptée au marché du travail. 
+    <br><br>
+     Explorez nos parcours et trouvez la formation qui correspond le mieux à vos objectifs.
+  </p>
+  <a href="{% url 'liste_formations' %}" class="btn-decouvrir">
+    Découvrir nos Formations →
+  </a>
+  
+</div>
+
+
+
+
+<!-- Section Témoignages -->
+<section id="temoignages">
+    <h2> Témoignages - ALEXSYS SOLUTIONS</h2>
+    
+    <div class="container">
+    <div id="testimonials">  
+        <div class="testimonial">
+    <p>⭐⭐⭐⭐⭐ - “Hassan B. – Développeur Web junior
+    "Grâce à la formation Django chez ALEXSYS SOLUTIONS, j’ai pu décrocher mon premier stage dans une startup tech. Les formateurs sont très pédagogues et les projets sont concrets et pratiques."”</p>
+    <p>⭐⭐⭐⭐⭐ - “Sofia M. – Étudiante en cybersécurité
+   "La formation en Réseaux & Sécurité est à la fois complète et accessible. J’ai enfin compris les protocoles réseau, et les TP pratiques m’ont beaucoup aidée. Merci à toute l’équipe !"
+    ”</p>
+     <p>⭐⭐⭐⭐⭐ - “Youssef A. – Analyste de données
+   "ALEXSYS m’a permis de maîtriser Python pour l’analyse de données. Aujourd’hui, je travaille sur des tableaux de bord interactifs grâce à ce que j’ai appris ici. Une formation orientée métier !"”</p>
+      <p>⭐⭐⭐⭐⭐ - “Fatima E. – Responsable RH
+    "Nous avons formé toute notre équipe sur les outils CRM grâce à ALEXSYS SOLUTIONS. L’accompagnement est personnalisé, et les formateurs sont très à l’écoute. Je recommande vivement."”</p>
+       <p>⭐⭐⭐⭐⭐ - “Walid K. – Étudiant EMSI
+  "J’ai suivi le module de développement web complet. Les supports sont clairs, les formateurs prennent le temps de répondre à chaque question, et l’ambiance est super professionnelle."”</p>
+       <p>⭐⭐⭐⭐⭐ - “Nour L. – Freelance
+  "Enfin une formation utile et concrète au Maroc ! Je suis maintenant capable de créer des sites professionnels pour mes clients. Merci ALEXSYS pour cette montée en compétence rapide !"”</p>
+    </div>
+    </div>
+     <!-- Témoignages ajoutés par l'utilisateur -->
+   </div>
+
+  </div>
+   <h2>Ajouter un témoignage</h2>
+   
+  <form id="testimonialForm" action="{% url 'ajouter_temoin' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="nom" placeholder="Nom et statut" required>
+    <textarea name="commentaire" placeholder="Votre témoignage" required></textarea>
+    <!-- étoiles -->
+   <div class="stars">
+      <span data-value="1">★</span>
+      <span data-value="2">★</span>
+      <span data-value="3">★</span>
+      <span data-value="4">★</span>
+      <span data-value="5">★</span>
+    </div>
+    <input type="hidden" name="note" id="note" value="5">
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <hr style="border-color:#ddd; margin:40px 0;">
+  
+  {% if temoins %}
+    {% for t in temoins %}
+      <div class="testimonial">
+        <strong>{{ t.nom }}</strong> - <small>{{ t.date|date:"d/m/Y H:i" }}</small>
+        
+    <!-- Affichage des étoiles selon la note -->
+      <div class="note">
+        {% for i in "12345" %}
+          {% if forloop.counter <= t.note %}
+            ★
+          {% else %}
+            ☆
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <p>{{ t.commentaire }}</p>
+    </div>
+  {% endfor %}
+
+{% endif %}
+<!-- Script JS pour rendre les étoiles cliquables -->
+<script>
+const stars = document.querySelectorAll('.stars span');
+const noteInput = document.getElementById('note');
+
+// couleur par défaut
+stars.forEach(s => s.style.color = 'gray');
+
+// clic sur une étoile
+stars.forEach(star => {
+    star.addEventListener('click', () => {
+        let valeur = parseInt(star.dataset.value);
+        noteInput.value = valeur;
+
+        // mettre à jour les couleurs
+        stars.forEach(s => {
+            s.style.color = parseInt(s.dataset.value) <= valeur ? 'gold' : 'gray';
+        });
+    });
+});
+
+// optionnel : survol des étoiles
+stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+        let valeur = parseInt(star.dataset.value);
+        stars.forEach(s => {
+            s.style.color = parseInt(s.dataset.value) <= valeur ? 'lightgoldenrodyellow' : 'gray';
+        });
+    });
+    star.addEventListener('mouseout', () => {
+        let valeur = parseInt(noteInput.value);
+        stars.forEach(s => {
+            s.style.color = parseInt(s.dataset.value) <= valeur ? 'gold' : 'gray';
+        });
+    });
+});
+</script>
+<script>
+const stars = document.querySelectorAll('.stars span');
+const noteInput = document.getElementById('note');
+
+stars.forEach(star => {
+    star.addEventListener('click', () => {
+        noteInput.value = star.dataset.value;
+        stars.forEach(s => s.classList.remove('selected'));
+        for(let i=0; i<star.dataset.value; i++){
+            stars[i].classList.add('selected');
+        }
+    });
+});
+</script>
+
+
+
+
+
+<script>
+  let index = 0;
+const slides = document.querySelectorAll('.hero-slideshow img');
+
+function changeSlide() {
+  slides[index].classList.remove('active');
+  index = (index + 1) % slides.length;
+  slides[index].classList.add('active');
+}
+
+setInterval(changeSlide, 2000); // toutes les 4s
+
+</script>
+
+
+
+
+
+<script>
+// ===== Effet "typer" hero text =====
+const heroText = document.getElementById("hero-text");
+const fullText = heroText.innerText;
+heroText.innerText = ""; // on vide le texte
+let i = 0;
+
+function typeHero() {
+    if(i < fullText.length) {
+        const span = document.createElement("span");
+        span.innerText = fullText[i];
+        span.style.opacity = "0";
+        span.style.transition = "opacity 0.3s ease";
+        heroText.appendChild(span);
+        setTimeout(() => { span.style.opacity = "1"; }, 50);
+        i++;
+        setTimeout(typeHero, 80); // vitesse d'apparition
+    }
+}
+
+window.addEventListener('load', typeHero);
+</script>
+
+
+
+
+
+
+
+<script>
+// Animation hero image au chargement
+window.addEventListener('load', () => {
+  const hero = document.querySelector('.full-image');
+  hero.classList.add('visible');
+});
+
+// Optionnel : parallax au scroll
+window.addEventListener('scroll', () => {
+  const heroImg = document.querySelector('.full-image img');
+  const scroll = window.scrollY;
+  heroImg.style.transform = `scale(${1 + scroll/4000}) translateY(${scroll/10}px)`;
+});
+
+</script>
+
+
+
+
+<script>
+// ===== Fade-in des sections =====
+const fadeElements = document.querySelectorAll('.fade-in, .about, .testimonial-box');
+
+function checkFadeIn() {
+  const windowHeight = window.innerHeight;
+  fadeElements.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if(top < windowHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+}
+
+window.addEventListener('scroll', checkFadeIn);
+window.addEventListener('load', checkFadeIn);
+
+// ===== Smooth scroll pour toutes les ancres =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+});
+
+// ===== Animation boutons =====
+const buttons = document.querySelectorAll('.btn, .btn-voir-plus, button');
+buttons.forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    btn.style.transform = 'scale(1.05)';
+    btn.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'scale(1)';
+    btn.style.boxShadow = 'none';
+  });
+});
+
+// ===== Scroll to top =====
+const topBtn = document.createElement('div');
+topBtn.innerHTML = '⬆';
+topBtn.style.position = 'fixed';
+topBtn.style.bottom = '30px';
+topBtn.style.right = '30px';
+topBtn.style.backgroundColor = '#5276a5';
+topBtn.style.color = 'white';
+topBtn.style.padding = '12px 15px';
+topBtn.style.borderRadius = '50%';
+topBtn.style.cursor = 'pointer';
+topBtn.style.fontSize = '20px';
+topBtn.style.display = 'none';
+topBtn.style.zIndex = '1000';
+document.body.appendChild(topBtn);
+
+topBtn.addEventListener('click', () => {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 300) topBtn.style.display = 'block';
+  else topBtn.style.display = 'none';
+});
+</script>
+
+
+
+
+
+
+</script>
+    <script>
+         let temoignages = JSON.parse(localStorage.getItem("temoignages")) || [];
+  let indexModification = -1;
+
+  function afficherTemoignages() {
+    const div = document.getElementById("listeTemoignages");
+    div.innerHTML = "";
+    temoignages.forEach((t, index) => {
+      const bloc = document.createElement("div");
+      bloc.className = "temoignage";
+      bloc.innerHTML = `
+        <div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+        <strong>${t.nom}</strong> – ${t.metier}
+        <p>"${t.message}"</p>
+        <div class="actions">
+          <button onclick="modifierTemoignage(${index})">✏️</button>
+          <button onclick="supprimerTemoignage(${index})">🗑️</button>
+        </div>
+      `;
+      div.appendChild(bloc);
+    });
+  }
+
+  function modifierTemoignage(index) {
+    const t = temoignages[index];
+    document.getElementById("nom").value = t.nom;
+    document.getElementById("metier").value = t.metier;
+    document.getElementById("message").value = t.message;
+    indexModification = index;
+  }
+
+  function supprimerTemoignage(index) {
+    temoignages.splice(index, 1);
+    localStorage.setItem("temoignages", JSON.stringify(temoignages));
+    afficherTemoignages();
+  }
+
+  document.getElementById("temoignageForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const nom = document.getElementById("nom").value;
+    const metier = document.getElementById("metier").value;
+    const message = document.getElementById("message").value;
+
+    if (indexModification >= 0) {
+      temoignages[indexModification] = { nom, metier, message };
+      indexModification = -1;
+    } else {
+      temoignages.push({ nom, metier, message });
+    }
+
+    localStorage.setItem("temoignages", JSON.stringify(temoignages));
+    afficherTemoignages();
+    document.getElementById("temoignageForm").reset();
+  });
+
+  afficherTemoignages();
+
+  
+    const testimonialsDiv = document.getElementById("testimonials");
+
+    function loadTestimonials() {
+      const saved = localStorage.getItem("alexsys_testimonials");
+      if (saved) {
+        JSON.parse(saved).forEach(t => addTestimonialToPage(t.rating, t.name, t.message, false));
+      }
+    } 
+
+    function saveTestimonials() {
+      const testimonials = [];
+      document.querySelectorAll(".testimonial[data-user='true']").forEach(div => {
+        testimonials.push({
+          rating: div.querySelector(".rating").innerText,
+          name: div.querySelector("strong").innerText,
+          message: div.querySelector("p").innerText
+        });
+      });
+      localStorage.setItem("alexsys_testimonials", JSON.stringify(testimonials));
+    }
+
+    function addTestimonial() {
+      const rating = document.getElementById("rating").value;
+      const name = document.getElementById("name").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (name && message) {
+        addTestimonialToPage(rating, name, message, true);
+        saveTestimonials();
+        document.getElementById("name").value = "";
+        document.getElementById("message").value = "";
+      }
+    }
+
+    function addTestimonialToPage(rating, name, message, isUser = true) {
+      const div = document.createElement("div");
+      div.className = "testimonial";
+      if (isUser) div.setAttribute("data-user", "true");
+
+      div.innerHTML = `
+        <div class="rating">${rating}</div>
+        <strong>${name}</strong>
+        <p>${message}</p>
+        ${isUser ? `
+        <div class="actions">
+          <button onclick="editTestimonial(this)">✏️ Modifier</button>
+          <button onclick="deleteTestimonial(this)">🗑️ Supprimer</button>
+        </div>` : ""}
+      `;
+      testimonialsDiv.appendChild(div);
+    }
+
+    function deleteTestimonial(btn) {
+      const div = btn.closest(".testimonial");
+      div.remove();
+      saveTestimonials();
+    }
+
+    function editTestimonial(btn) {
+      const div = btn.closest(".testimonial");
+      const rating = div.querySelector(".rating").innerText;
+      const name = div.querySelector("strong").innerText;
+      const message = div.querySelector("p").innerText;
+
+      // Remplir les champs
+      document.getElementById("rating").value = rating;
+      document.getElementById("name").value = name;
+      document.getElementById("message").value = message;
+
+      // Supprimer l'ancien témoignage
+      div.remove();
+      saveTestimonials();
+    }
+
+    loadTestimonials();
+  </script>
+
+<!-- Section Contact -->
+ 
+ <section class="contact-section" id="contact">
+    <div class="contact-container">
+      <h2>Contactez-Nous</h2>
+      <p class="contact-subtitle">Vous avez une question ? Un projet ? Parlons-en !</p>
+      <form class="contact-form" method="POST" enctype="multipart/form-data" action="{% url 'index' %}">
+        {% csrf_token %}
+        <input type="text" name="nom" placeholder="Votre nom" required />
+        <input type="email" name="email" placeholder="Votre email" required />
+        <input type="text" name="sujet" placeholder="Sujet" required />
+
+        <label for="type_demande">Type de demande</label>
+        <select name="type_demande" id="type_demande" required>
+          <option value="contact">Message de contact</option>
+          <option value="stage">Demande de stage</option>
+          <option value="cv">Envoi de CV</option>
+        </select>
+
+        <textarea name="message" placeholder="Votre message" required></textarea>
+
+        <label for="cv">CV (PDF ou Word)</label>
+        <input type="file" name="cv" id="cv" accept=".pdf,.doc,.docx" />
+
+        <button type="submit">Envoyer</button>
+      </form>
+
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </section>
+
+ <!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>ALEXSYS SOLUTIONS</h3>
+      <p>Votre partenaire en transformation digitale et formations professionnelles. Nous accompagnons les entreprises vers l'autonomie digitale grâce à des solutions innovantes et un savoir-faire reconnu.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Liens rapides</h4>
+      <ul>
+        <li><a href="{% url 'index' %}">Accueil</a></li>
+        <li><a href="{% url 'a_propos' %}">À propos</a></li>
+        <li><a href="{% url 'temoins' %}">Témoignages</a></li>
+        <li><a href="{% url 'contact' %}" >Contact</a></li>
+        <li><a href="{% url 'admin_panel' %}">Admin</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contactez-nous</h4>
+      <p><strong>Adresse :</strong> 123 Rue de la Transformation, Casablanca, Maroc</p>
+      <p><strong>Téléphone :</strong> +212 6 12 34 56 78</p>
+      <p><strong>Email :</strong> contact@alexsys-solutions.ma</p>
+      
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 ALEXSYS SOLUTIONS. Tous droits réservés.</p>
+  </div>
+</footer>
+
+
+</body>
+</html>

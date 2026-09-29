@@ -1,0 +1,132 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .article-container {
+        max-width: 800px;
+        margin: 50px auto 70px;
+        padding: 30px 40px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #2c3e50;
+    }
+
+    .article-container h1 {
+        font-size: 2.6rem;
+        margin-bottom: 25px;
+        color: #1e40af;
+        text-align: center;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .article-container img {
+        display: block;
+        margin: 0 auto 30px auto;
+        max-width: 100%;
+        border-radius: 14px;
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.15);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .article-container img:hover {
+        transform: scale(1.05);
+    }
+
+    .article-meta {
+        font-size: 0.95rem;
+        color: #6b7280; /* gris moyen */
+        text-align: right;
+        margin-bottom: 30px;
+        font-style: italic;
+        letter-spacing: 0.02em;
+    }
+
+    .article-container p {
+        font-size: 1.15rem;
+        line-height: 1.75;
+        color: #374151;
+        text-align: justify;
+        margin-bottom: 35px;
+    }
+
+    .back-link {
+        display: inline-block;
+        text-decoration: none;
+        background: #2563eb;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .back-link:hover {
+        background: #1d4ed8;
+        box-shadow: 0 6px 20px rgba(29, 78, 216, 0.45);
+    }
+
+    @media (max-width: 600px) {
+        .article-container {
+            padding: 20px 15px;
+            margin: 30px auto 50px;
+        }
+
+        .article-container h1 {
+            font-size: 1.9rem;
+            margin-bottom: 20px;
+        }
+
+        .article-container p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="article-container">
+    <h1>{{ article.titre }}</h1>
+
+    <!-- صورة رئيسية -->
+    {% if article.image %}
+        <img src="{{ article.image.url }}" alt="Image principale de {{ article.titre }}">
+    {% endif %}
+
+    <!-- صور إضافية -->
+    {% if article.images.all %}
+  <div class="extra-images">
+    {% for img in article.images.all %}
+      <img src="{{ img.image.url }}" alt="Image de {{ article.titre }}">
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+    <div class="article-meta">
+        Publié le {{ article.date_pub|date:"d/m/Y H:i" }}
+        
+        |     Vues : {{ article.vues }}
+    </div>
+
+    <!-- محتوى المقال -->
+    <div class="article-content">
+        <p>{{ article.contenu|linebreaks }}</p>
+    </div>
+
+    <div class="article-meta">
+    {% if article.auteur %}
+            Auteur : {{ article.auteur }}
+        {% endif %}
+        {% if article.categorie %}
+             | Catégorie : {{ article.categorie }}
+        {% endif %}
+    </div>
+
+    <a href="{% url 'blog_list' %}" class="back-link">⬅ Retour aux articles</a>
+</div>
+
+{% endblock %}

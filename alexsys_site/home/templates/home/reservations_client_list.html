@@ -1,0 +1,97 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <h1 class="title">Mes Réservations</h1>
+</div>
+
+{% if reservations %}
+<div class="reservations-container">
+    {% for res in reservations %}
+    <div class="reservation-card {% if res.status == 'pending' %}pending{% elif res.status == 'accepted' %}accepted{% else %}rejected{% endif %}">
+        <div class="reservation-header">
+            <h3>{{ res.objet }}</h3>
+            <span class="status-badge {% if res.status == 'pending' %}pending{% elif res.status == 'accepted' %}accepted{% else %}rejected{% endif %}">
+                {% if res.status == 'pending' %}⏳ En attente{% elif res.status == 'accepted' %}✅ Acceptée{% else %}❌ Refusée{% endif %}
+            </span>
+        </div>
+        <p><strong>Date :</strong> {{ res.date }}</p>
+        <p><strong>Nom :</strong> {{ res.nom }}</p>
+        <p><strong>Email :</strong> {{ res.email }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-center text-muted mt-5">Vous n’avez aucune réservation pour le moment.</p>
+{% endif %}
+
+<style>
+.reservations-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Carte */
+.reservation-card {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    border-left: 5px solid transparent; /* Ligne verticale */
+}
+
+.reservation-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+/* Ligne verticale selon le statut */
+.reservation-card.pending {
+    border-left-color: #f0ad4e; /* orange */
+}
+.reservation-card.accepted {
+    border-left-color: #5cb85c; /* vert */
+}
+.reservation-card.rejected {
+    border-left-color: #d9534f; /* rouge */
+}
+
+/* Header de la carte */
+.reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Badge */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+}
+.status-badge.pending { background-color: #f0ad4e; }
+.status-badge.accepted { background-color: #5cb85c; }
+.status-badge.rejected { background-color: #d9534f; }
+
+.reservation-card p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    color: #1f2937;
+}
+
+.title {
+    font-weight: bold;
+    color: #1e3a8a;
+}
+</style>
+{% endblock %}

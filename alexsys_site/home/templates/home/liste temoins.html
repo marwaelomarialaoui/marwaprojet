@@ -1,0 +1,11 @@
+<h2>Ce que disent nos clients</h2>
+<ul>
+  {% for temoin in temoins %}
+    <li>
+      <strong>{{ temoin.nom }}</strong> ({{ temoin.date|date:"d/m/Y" }})<br>
+      {{ temoin.commentaire }}
+    </li>
+  {% empty %}
+    <li>Aucun témoignage pour l'instant.</li>
+  {% endfor %}
+</ul>

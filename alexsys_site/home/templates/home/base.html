@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ALEXSYS SOLUTIONS{% endblock %}</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    header {
+      background-color: rgba(72, 118, 163, 1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 30px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #cce6ff;
+    }
+
+    .btn-contact {
+      background-color: rgba(66, 111, 156, 1);
+      color: white;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-contact:hover {
+      background-color: rgb(107, 157, 206);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 20px;
+      }
+
+      .nav-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      nav {
+        flex-direction: column;
+        width: 100%;
+      }
+    }
+
+    main {
+      padding-top: 90px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <h1><a href="{% url 'index' %}" style="color: white; text-decoration: none;">ALEXSYS SOLUTIONS</a></h1>
+    </div>
+    <div class="nav-actions">
+      <nav>
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'reserver' %}">Réserver</a>
+        <a href="{% url 'temoins' %}">Témoignages</a>
+        <a href="{% url 'blog_list' %}">Blog</a>
+        <a href="{% url 'liste_formations' %}">Nos Formations</a>
+        <a href="{% url 'admin_panel' %}">Admin</a>
+        
+        <a href="{% url 'dashboard' %}">user</a>
+      </nav>
+      <a href="{% url 'contact' %}" class="btn-contact">📞 Nous Contacter</a>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+</body>
+</html>

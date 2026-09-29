@@ -1,0 +1,202 @@
+{% extends "home/base.html" %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block content %}
+<div style="max-width:700px; margin:30px auto; padding:30px; background:#fff; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); font-family:Arial, sans-serif;">
+    <h2 style="text-align:center; margin-bottom:30px; color:#2563eb;">💳 Choisir votre moyen de paiement</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="background:#d1fae5; color:#065f46; padding:12px 15px; border-radius:8px; margin-bottom:15px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" action="{% url 'choisir_paiement' inscription.id %}">
+        {% csrf_token %}
+
+        <!-- Nom et Prénom -->
+        <div style="margin-bottom:15px;">
+            <label style="font-weight:bold;">Prénom :</label>
+            <input type="text" name="prenom" required style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+        </div>
+        <div style="margin-bottom:15px;">
+            <label style="font-weight:bold;">Nom :</label>
+            <input type="text" name="nom" required style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+        </div>
+
+        <!-- Mode de paiement -->
+        <div style="margin-bottom:15px;">
+            <label style="font-weight:bold;">Mode de paiement :</label>
+            <select name="mode_paiement" id="mode" required onchange="afficherFormulaire()" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; background:#f0f4f8;">
+                <option value="">-- Choisir --</option>
+                <option value="online">💳 Paiement en ligne</option>
+                <option value="mobile">📱 Paiement mobile</option>
+                <option value="classique">🏦 Paiement classique</option>
+            </select>
+        </div>
+
+        <!-- Paiement en ligne -->
+        <div id="form-online" style="display:none; padding:20px; border-left:6px solid #2563eb; border-radius:8px; background:#e0f2fe; margin-bottom:15px;">
+            <label style="font-weight:bold;">Service :</label>
+            <select name="online_service" id="online_service" onchange="afficherOnlineForm()" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                <option value="">-- Choisir --</option>
+                <option value="carte">💳 Carte bancaire</option>
+                <option value="paypal">🅿️ PayPal</option>
+                <option value="bp">🏦 Banque Populaire Carte Internationale</option>
+            </select>
+
+            <!-- Carte bancaire / BP -->
+            <div id="details-carte" style="display:none; margin-top:15px;">
+                <p style="color:#1e40af; font-style:italic;">Renseignez vos informations bancaires pour sécuriser votre paiement en ligne.</p>
+                <input type="text" name="numero" placeholder="Numéro de carte" required style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" name="expiration" placeholder="MM/AA" required style="flex:1; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <input type="text" name="cvv" placeholder="CVV" required style="flex:1; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <input type="text" name="rue" placeholder="Rue" required style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" name="code_postal" placeholder="Code postal" required style="flex:1; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <input type="text" name="ville" placeholder="Ville" required style="flex:1; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <input type="text" name="pays_region" placeholder="Pays / Région" required style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+                <input type="text" name="titulaire_carte" placeholder="Nom du titulaire de la carte" required style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+            </div>
+
+            <!-- PayPal -->
+            <div id="details-paypal" style="display:none; margin-top:15px;">
+                <p style="color:#1e40af; font-style:italic;">Entrez l’email associé à votre compte PayPal pour effectuer le paiement.</p>
+                <input type="email" name="paypal_email" placeholder="Email PayPal" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;">
+            </div>
+        </div>
+
+        <!-- Paiement mobile -->
+        <div id="form-mobile" style="display:none; padding:20px; border-left:6px solid #059669; border-radius:8px; background:#d1fae5; margin-bottom:15px;">
+            <label style="font-weight:bold;">Service :</label>
+            <select name="mobile_service" id="mobile_service" onchange="afficherMobileForm()" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                <option value="">-- Choisir --</option>
+                <option value="cih">📱 CIH Pay</option>
+                <option value="bmce">📲 BMCE Direct</option>
+                <option value="wafacash">💸 WafaCash</option>
+            </select>
+
+            <div id="details-mobile" style="display:none; margin-top:15px;">
+                <p style="color:#065f46; font-style:italic;">Renseignez votre numéro, le montant et la référence pour finaliser le paiement mobile.</p>
+                <input type="text" name="tel_mobile" placeholder="Numéro de téléphone" required style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+                <input type="text" name="montant" placeholder="Montant à payer" required style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+                <input type="text" name="reference" placeholder="Référence (facultatif)" style="width:100%; padding:10px; margin:5px 0; border-radius:6px; border:1px solid #ccc;">
+            </div>
+        </div>
+
+        <!-- Paiement classique -->
+        <div id="form-classique" style="display:none; padding:20px; border-left:6px solid #d97706; border-radius:8px; background:#fff7ed; margin-bottom:15px;">
+            <label style="font-weight:bold;">Service :</label>
+            <select name="classique_service" id="classique_service" onchange="afficherClassiqueForm()" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                <option value="">-- Choisir --</option>
+                <option value="virement">💳 Virement bancaire</option>
+                <option value="especes">💵 Espèces au siège</option>
+                <option value="cheque">📝 Chèque</option>
+            </select>
+
+            <div id="virement_form" style="display:none; margin-top:15px;">
+                <p style="color:#b45309; font-style:italic;">Effectuez votre virement vers le compte suivant et envoyez-nous le reçu par email ou contactez l'administration pour confirmation :</p>
+                <label>RIB / IBAN :</label>
+                <input type="text" name="rib" value="FR76 3000 6000 0112 3456 7890 123" readonly style="width:100%; padding:10px; background:#f3f3f3; border-radius:6px; border:1px solid #ccc;">
+                <p>Nom de la banque : Banque Populaire</p>
+                <p>Titulaire : Alexsys Solutions</p>
+            </div>
+            <div id="especes_form" style="display:none; margin-top:15px;">
+                <p style="color:#b45309; font-style:italic;">Rendez-vous au siège pour effectuer le paiement en espèces. Contactez-nous pour fixer un rendez-vous.</p>
+            </div>
+            <div id="cheque_form" style="display:none; margin-top:15px;">
+                <p style="color:#b45309; font-style:italic;">Préparez votre chèque et envoyez-le au siège. Prenez rendez-vous si nécessaire.</p>
+            </div>
+        </div>
+         
+
+              <!-- Bouton de confirmation -->
+        <button type="submit" style="margin-top:25px; background:linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%); color:#fff; padding:14px 25px; border:none; border-radius:12px; cursor:pointer; font-size:18px; font-weight:700; transition:0.3s; box-shadow:0 6px 15px rgba(37, 99, 235, 0.4);">
+            Confirmer le paiement
+        </button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // désactiver tous les required au chargement
+    document.querySelectorAll('input, select').forEach(i => i.required = false);
+});
+
+function afficherFormulaire(){
+    const mode = document.getElementById("mode").value;
+    document.getElementById("form-online").style.display = (mode=="online") ? "block" : "none";
+    document.getElementById("form-mobile").style.display = (mode=="mobile") ? "block" : "none";
+    document.getElementById("form-classique").style.display = (mode=="classique") ? "block" : "none";
+
+    // Masquer tous les sous-formulaires
+    document.getElementById("details-carte").style.display = "none";
+    document.getElementById("details-paypal").style.display = "none";
+    document.getElementById("details-mobile").style.display = "none";
+    document.getElementById("virement_form").style.display = "none";
+    document.getElementById("especes_form").style.display = "none";
+    document.getElementById("cheque_form").style.display = "none";
+
+    // Désactiver tous les required
+    document.querySelectorAll('#details-carte input, #details-paypal input, #details-mobile input').forEach(i => i.required = false);
+    document.querySelectorAll('#virement_form input').forEach(i => i.required = false);
+}
+
+function afficherOnlineForm(){
+    const service = document.getElementById("online_service").value;
+    const detailsCarte = document.getElementById("details-carte");
+    const detailsPaypal = document.getElementById("details-paypal");
+
+    if(service=="carte" || service=="bp"){
+        detailsCarte.style.display = "block";
+        detailsPaypal.style.display = "none";
+        detailsCarte.querySelectorAll("input").forEach(i => i.required = true);
+        detailsPaypal.querySelectorAll("input").forEach(i => i.required = false);
+    } else if(service=="paypal"){
+        detailsPaypal.style.display = "block";
+        detailsCarte.style.display = "none";
+        detailsPaypal.querySelectorAll("input").forEach(i => i.required = true);
+        detailsCarte.querySelectorAll("input").forEach(i => i.required = false);
+    } else {
+        detailsCarte.style.display = "none";
+        detailsPaypal.style.display = "none";
+        detailsCarte.querySelectorAll("input").forEach(i => i.required = false);
+        detailsPaypal.querySelectorAll("input").forEach(i => i.required = false);
+    }
+}
+
+function afficherMobileForm(){
+    const service = document.getElementById("mobile_service").value;
+    const details = document.getElementById("details-mobile");
+    if(service!=""){
+        details.style.display = "block";
+        details.querySelectorAll("input").forEach(i => i.required = true);
+    } else {
+        details.style.display = "none";
+        details.querySelectorAll("input").forEach(i => i.required = false);
+    }
+}
+
+function afficherClassiqueForm(){
+    const service = document.getElementById("classique_service").value;
+    const virement = document.getElementById("virement_form");
+    const especes = document.getElementById("especes_form");
+    const cheque = document.getElementById("cheque_form");
+
+    virement.style.display = (service=="virement") ? "block" : "none";
+    especes.style.display = (service=="especes") ? "block" : "none";
+    cheque.style.display = (service=="cheque") ? "block" : "none";
+
+    virement.querySelectorAll("input").forEach(i => i.required = (service=="virement"));
+    especes.querySelectorAll("input").forEach(i => i.required = false);
+    cheque.querySelectorAll("input").forEach(i => i.required = false);
+}
+</script>
+
+{% endblock %}

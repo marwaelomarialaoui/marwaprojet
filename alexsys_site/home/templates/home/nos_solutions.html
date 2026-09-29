@@ -1,0 +1,182 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .solutions-section {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f9fafc;
+  }
+  .solutions-section h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #0b0b0b;
+  }
+  .solutions-section h2 {
+    font-size: 26px;
+    margin-bottom: 45px;
+    color: #555;
+  }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .solution-card {
+    background-color: white;
+    border-radius: 18px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease-in-out;
+    padding: 25px 20px;
+    text-align: center;
+  }
+  .solution-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+  .solution-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+  .solution-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 8px;
+  }
+  .solution-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+  }
+  .partner-section {
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 50px;
+  }
+  .partner-section .section-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: 600;
+  }
+  .partner-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+  }
+  .partner-logo {
+    width: 140px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .partner-logo:hover {
+    transform: scale(1.1);
+  }
+</style>
+
+<section class="solutions-section">
+  <h1>La gestion de vos processus métiers</h1>
+  <h2>Nos Solutions</h2>
+
+  <div class="solutions-grid">
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/wacomos.png' %}" alt="Wacomos">
+      <div class="solution-title">Wacomos</div>
+      <div class="solution-desc">Système de gestion de la collecte des déchets et de nettoiement.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/educai.png' %}" alt="Educ-AI">
+      <div class="solution-title">Educ-AI</div>
+      <div class="solution-desc">L'innovation technologique pour libérer la créativité des élèves.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/trepho.png' %}" alt="Trepho">
+      <div class="solution-title">Trepho</div>
+      <div class="solution-desc">Gestion métier quotidienne simplifiée.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/golfyse..jpeg' %}" alt="Golfyse">
+      <div class="solution-title">Golfyse</div>
+      <div class="solution-desc">Plongez dans l'excellence du golf moderne avec Golfyse.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/optima.jpg' %}" alt="Optima">
+      <div class="solution-title">Optima</div>
+      <div class="solution-desc">L’assurance qualité à chaque étape, la certification ISO à portée de main.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/evalys.png' %}" alt="Evalys">
+      <div class="solution-title">Evalys</div>
+      <div class="solution-desc">Data & IA pour transformer votre contrôle de gestion.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/helpdesk.jpeg' %}" alt="IT Helpdesk">
+      <div class="solution-title">IT Helpdesk</div>
+      <div class="solution-desc">Support intelligent pour une prise en charge rapide des tickets.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/micsap.png' %}" alt="MicSap">
+      <div class="solution-title">MicSap</div>
+      <div class="solution-desc">Pont entre SAP et votre environnement technologique.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/sadi.png' %}" alt="SADI">
+      <div class="solution-title">SADI</div>
+      <div class="solution-desc">Dématérialisation intelligente et intégration ERP.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/smart_rh.jpg' %}" alt="Smart RH">
+      <div class="solution-title">Smart RH</div>
+      <div class="solution-desc">L’IA au service du capital humain.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/smart_match.png' %}" alt="Smart Match">
+      <div class="solution-title">Smart Match</div>
+      <div class="solution-desc">Détection des plaques pour sécuriser l'accès aux sites.</div>
+    </div>
+
+    <div class="solution-card">
+      <img src="{% static 'home/images/rpa.png' %}" alt="RPA">
+      <div class="solution-title">RPA</div>
+      <div class="solution-desc">Automatisation robotisée des processus pour gagner du temps et réduire les erreurs.</div>
+    </div>
+
+  </div> <!-- fermeture grid -->
+
+</section>
+
+<section class="partner-section">
+  <h2 class="section-title">Partenariat technologique</h2>
+  <div class="partner-logos">
+    <img src="{% static 'home/images/microsoft.png' %}" alt="Microsoft" class="partner-logo">
+    <img src="{% static 'home/images/cms.png' %}" alt="CMS" class="partner-logo">
+    <img src="{% static 'home/images/natc.png' %}" alt="NATC" class="partner-logo">
+    <img src="{% static 'home/images/jesa.png' %}" alt="JESA" class="partner-logo">
+    <img src="{% static 'home/images/onp.jpeg' %}" alt="ONP" class="partner-logo">
+    <img src="{% static 'home/images/yuna.png' %}" alt="YUNA" class="partner-logo">
+    <img src="{% static 'home/images/spc.png' %}" alt="SPC" class="partner-logo">
+  </div>
+</section>
+{% endblock %}

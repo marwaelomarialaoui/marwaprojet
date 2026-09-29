@@ -1,0 +1,162 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Mes Messages{% endblock %}
+
+{% block content %}
+<h1 class="page-title">📨 Mes Messages & Réponses de l’Administration</h1>
+
+<form method="get" class="email-form">
+    <label for="email">Votre email :</label>
+    <div class="input-group">
+        <input type="email" id="email" name="email" value="{{ email }}" required placeholder="exemple@domaine.com">
+        <button type="submit">🔍 Rechercher</button>
+    </div>
+</form>
+
+{% if messages_user %}
+<div class="messages-container">
+    {% for msg in messages_user %}
+    <!-- Message utilisateur -->
+    <div class="message-card user-message">
+        <div class="message-header">📩 Vous</div>
+        <div class="message-body">
+            <h3>{{ msg.sujet }}</h3>
+            <p>{{ msg.message }}</p>
+        </div>
+    </div>
+
+    <!-- Réponse admin -->
+    <div class="message-card admin-message">
+        <div class="message-header">👨‍💼 Administration</div>
+        <div class="message-body">
+            {% if msg.reponse_admin %}
+                <p>{{ msg.reponse_admin }}</p>
+
+                {% if msg.statut == "valide" %}
+                <div class="paiement-alert">
+                    ✅ Votre demande a été validée.<br>
+                    💳 Veuillez procéder au <a href="#">paiement</a> pour finaliser votre inscription.
+                </div>
+                {% endif %}
+            {% else %}
+                <em>Réponse en attente...</em>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% elif email and not messages_user %}
+<p class="no-message">⚠️ Aucun message trouvé pour cet email.</p>
+{% endif %}
+
+<style>
+/* TITRE */
+.page-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 25px 0;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+/* FORMULAIRE EMAIL */
+.email-form {
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+}
+.email-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+.input-group {
+    display: flex;
+    gap: 8px;
+}
+.email-form input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+.email-form button {
+    background: #1e3a8a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+.email-form button:hover {
+    background: #162f6a;
+}
+
+/* CONTAINER MESSAGES */
+.messages-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* CARTE MESSAGE */
+.message-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+.message-header {
+    padding: 10px 15px;
+    font-weight: 600;
+    background: #f3f4f6;
+}
+.user-message .message-header {
+    background: #e0f2fe;
+    color: #075985;
+}
+.admin-message .message-header {
+    background: #ede9fe;
+    color: #4c1d95;
+}
+.message-body {
+    padding: 15px;
+    background: #fff;
+}
+.message-body h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    color: #111;
+}
+
+/* PAIEMENT ALERT */
+.paiement-alert {
+    margin-top: 12px;
+    padding: 12px;
+    background: #fff8e1;
+    border-left: 5px solid #f39c12;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #8a6d3b;
+}
+.paiement-alert a {
+    color: #1e3a8a;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* MESSAGE VIDE */
+.no-message {
+    text-align: center;
+    color: #888;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,270 @@
+{% extends 'home/base.html' %}
+{% block title %}Gestion des Messages et Demandes{% endblock %}
+
+{% block content %}
+<style>
+/* Container centré avec padding */
+.container {
+    max-width: 900px;
+    margin: 40px auto 80px auto;
+    background-color: #f9fbfe;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre principal */
+h2 {
+    color: #1e3a8a;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Tableau */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    background-color: transparent;
+}
+
+/* En-tête */
+thead tr {
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 14px;
+}
+
+thead th {
+    padding: 14px 20px;
+    text-align: center;
+}
+
+/* Lignes du tableau */
+tbody tr {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(30, 58, 138, 0.07);
+    border-radius: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+tbody tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.15);
+}
+
+/* Cellules */
+tbody td {
+    padding: 15px 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #334155;
+    font-size: 15px;
+    word-break: break-word;
+}
+
+/* Badges */
+.badge {
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    display: inline-block;
+}
+
+.bg-success {
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
+}
+
+.bg-warning {
+    background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow: 0 4px 10px rgba(251, 191, 36, 0.4);
+}
+
+.bg-danger {
+    background: linear-gradient(90deg, #ef4444 0%, #b91c1c 100%);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+
+/* Boutons Accepter, Refuser, Répondre */
+.btn-accept, .btn-refuse, .btn-repondre {
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin: 0 6px;
+    text-decoration: none;
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
+}
+
+.btn-accept {
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+}
+
+.btn-accept:hover {
+    background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6);
+}
+
+.btn-refuse {
+    background: linear-gradient(90deg, #ef4444 0%, #b91c1c 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.btn-refuse:hover {
+    background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+}
+
+.btn-repondre {
+    background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
+}
+
+.btn-repondre:hover {
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.7);
+}
+
+/* Texte aucune action */
+.no-action {
+    font-style: italic;
+    color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px 15px 40px 15px;
+        padding: 30px 20px;
+    }
+    h2 {
+        font-size: 24px;
+    }
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        display: none;
+    }
+    tbody tr {
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(30, 58, 138, 0.1);
+        border-radius: 14px;
+        padding: 15px;
+    }
+    tbody td {
+        padding-left: 50%;
+        position: relative;
+        text-align: left;
+        font-size: 15px;
+    }
+    tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 700;
+        color: #1e3a8a;
+        white-space: nowrap;
+    }
+    .btn-accept, .btn-refuse, .btn-repondre {
+        width: 100%;
+        margin: 10px 0 0 0;
+        min-width: unset;
+    }
+    .btn-accept + .btn-refuse {
+        margin-top: 10px;
+    }
+}
+</style>
+
+<div class="container">
+    <h2>Gestion des Messages et Demandes</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Sujet</th>
+                <th>Type</th>
+                <th>Message</th>
+                <th>CV</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for m in messages %}
+            <tr>
+                <td data-label="Nom">{{ m.nom }}</td>
+                <td data-label="Email">{{ m.email }}</td>
+                <td data-label="Sujet">{{ m.sujet }}</td>
+                <td data-label="Type">{{ m.get_type_demande_display }}</td>
+                <td data-label="Message">{{ m.message|linebreaksbr }}</td>
+                <td data-label="CV">
+                    {% if m.cv %}
+                        <a href="{{ m.cv.url }}" target="_blank" rel="noopener noreferrer">Télécharger</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td data-label="Date">{{ m.date_envoi|date:"d/m/Y H:i" }}</td>
+                <td data-label="Statut">
+                    {% if m.statut == 'en_attente' %}
+                        <span class="badge bg-warning">En attente</span>
+                    {% elif m.statut == 'accepte' %}
+                        <span class="badge bg-success">Accepté</span>
+                    {% elif m.statut == 'refuse' %}
+                        <span class="badge bg-danger">Refusé</span>
+                    {% else %}
+                        {{ m.get_statut_display }}
+                    {% endif %}
+                </td>
+                <td data-label="Actions">
+                    {% if m.statut == 'en_attente' %}
+                        <form action="{% url 'accepter_message' m.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-accept" title="Accepter" aria-label="Accepter">✔ Accepter</button>
+                        </form>
+                        <form action="{% url 'refuser_message' m.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-refuse" title="Refuser" aria-label="Refuser">✘ Refuser</button>
+                        </form>
+                    {% elif m.statut == 'accepte' %}
+                        <a href="{% url 'envoyer_reponse' m.id %}" class="btn-repondre" title="Répondre">✉ Répondre</a>
+                    {% else %}
+                        <span class="no-action">Aucune action</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="9" class="text-muted">Aucun message trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

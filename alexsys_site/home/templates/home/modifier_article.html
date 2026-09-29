@@ -1,0 +1,112 @@
+{% extends 'home/base.html' %}
+{% block title %}Modifier Article{% endblock %}
+
+{% block content %}
+<style>
+/* Container centré et stylé */
+.container-form {
+    max-width: 700px;
+    margin: 40px auto 80px auto;
+    background-color: #f9fbfe;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre du formulaire */
+.container-form h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+}
+
+/* Inputs et textarea */
+.container-form input[type="text"],
+.container-form input[type="file"],
+.container-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.container-form input:focus,
+.container-form textarea:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 5px rgba(30, 58, 138, 0.3);
+    outline: none;
+}
+
+/* Boutons */
+.btn-primary, .btn-success, .btn-secondary {
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Bouton Enregistrer */
+.btn-success {
+    background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+.btn-success:hover {
+    background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(46, 204, 113, 0.6);
+}
+
+/* Bouton Annuler */
+.btn-secondary {
+    background: #bdc3c7;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(189, 195, 199, 0.4);
+}
+.btn-secondary:hover {
+    background: #95a5a6;
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(189, 195, 199, 0.6);
+}
+
+/* Labels stylés */
+.container-form label {
+    font-weight: 600;
+    color: #1e3a8a;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+</style>
+
+<div class="container-form">
+  <h2>Modifier l'article : {{ article.titre }}</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+                <small style="color:#555;">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+                <div style="color:#c0392b; font-size:13px;">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn-success">💾 Enregistrer</button>
+    <a href="{% url 'gerer_blog' %}" class="btn-secondary">↩ Annuler</a>
+  </form>
+</div>
+{% endblock %}

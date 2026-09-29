@@ -1,0 +1,248 @@
+{% extends 'home/base.html' %}
+{% block title %}Gérer Blog{% endblock %}
+
+{% block content %}
+<style>
+/* Container centré avec padding */
+.container {
+    max-width: 900px;
+    margin: 40px auto 80px auto;
+    background-color: #f9fbfe;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre principal */
+h2 {
+    color: #1e3a8a;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Bouton Ajouter */
+.btn-primary {
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-bottom: 30px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.7);
+}
+
+/* Tableau */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    background-color: transparent;
+}
+
+/* En-tête */
+thead tr {
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 14px;
+}
+
+thead th {
+    padding: 14px 20px;
+    text-align: center;
+}
+
+/* Lignes du tableau */
+tbody tr {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(30, 58, 138, 0.07);
+    border-radius: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+tbody tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.15);
+}
+
+/* Cellules */
+tbody td {
+    padding: 15px 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #334155;
+    font-size: 15px;
+    word-break: break-word;
+}
+
+/* Images */
+tbody td img {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.1);
+    max-height: 80px;
+    object-fit: cover;
+}
+
+/* Boutons Modifier et Supprimer */
+.btn-warning, .btn-danger {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin: 0 6px;
+    text-decoration: none;
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
+}
+
+/* Modifier (jaune) */
+.btn-warning {
+    background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(90deg, #fde68a 0%, #fbbf24 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
+}
+
+/* Supprimer (rouge) */
+.btn-danger {
+    background: linear-gradient(90deg, #ef4444 0%, #b91c1c 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px 15px 40px 15px;
+        padding: 30px 20px;
+    }
+    h2 {
+        font-size: 24px;
+    }
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        display: none;
+    }
+    tbody tr {
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(30, 58, 138, 0.1);
+        border-radius: 14px;
+        padding: 15px;
+    }
+    tbody td {
+        padding-left: 50%;
+        position: relative;
+        text-align: left;
+        font-size: 15px;
+    }
+    tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 700;
+        color: #1e3a8a;
+        white-space: nowrap;
+    }
+    .btn-warning, .btn-danger {
+        width: 100%;
+        margin: 10px 0 0 0;
+        min-width: unset;
+        display: block;
+        text-align: center;
+    }
+    .btn-warning + .btn-danger {
+        margin-top: 10px;
+    }
+}
+</style>
+
+<div class="container">
+  <h2>Gestion des Articles</h2>
+  <a href="{% url 'ajouter_article' %}" class="btn btn-primary"> Ajouter un article</a>
+  
+<table>
+  <thead>
+    <tr>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Catégorie</th>
+      <th>Vues</th>
+      <th>Date</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for article in articles %}
+    <tr>
+      <td data-label="Titre">{{ article.titre }}</td>
+      <td data-label="Auteur">
+        {% if article.auteur %} {{ article.auteur }} {% else %} - {% endif %}
+      </td>
+      <td data-label="Catégorie">
+        {% if article.categorie %} {{ article.categorie }} {% else %} - {% endif %}
+      </td>
+      <td data-label="Vues">{{ article.vues }}</td>
+      <td data-label="Date">{{ article.date_pub|date:"d/m/Y H:i" }}</td>
+      <td data-label="Image">
+        {% if article.image %}
+          <img src="{{ article.image.url }}" alt="{{ article.titre }}">
+        {% else %}
+          Pas d'image
+        {% endif %}
+      </td>
+      <td data-label="Actions">
+        <a href="{% url 'modifier_article' article.id %}" class="btn btn-warning">✏️ Modifier</a>
+        <a href="{% url 'supprimer_article' article.id %}" 
+           class="btn btn-danger"
+           onclick="return confirm('Voulez-vous vraiment supprimer cet article ?');">
+           🗑 Supprimer
+        </a>
+        <a href="{% url 'blog_detail' article.id %}" class="btn btn-info">👁 Voir</a>
+
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="7" class="text-muted" style="text-align:center; font-style:italic;">Aucun article trouvé.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+{% endblock %}

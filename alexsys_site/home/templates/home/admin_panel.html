@@ -1,0 +1,143 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Panneau d'administration{% endblock %}
+
+{% block content %}
+<style>
+/* Conteneur principal */
+.admin-container {
+    max-width: 700px;
+    margin: 40px auto 80px auto;
+    background-color: #f9fbfe;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre */
+.admin-container h1 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Disposition en colonne */
+.row {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Carte individuelle */
+.card {
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+
+/* Hover effet */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.15);
+}
+
+/* Titre de la carte */
+.card-title {
+    font-size: 20px;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Boutons */
+.card .btn {
+    display: inline-block;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+    transition: background 0.3s ease, transform 0.2s ease;
+    background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+}
+
+/* Hover bouton */
+.card .btn:hover {
+    background: linear-gradient(90deg, #e9a91eff 0%, #e9a91eff 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .admin-container {
+        margin: 20px 15px 40px 15px;
+        padding: 30px 20px;
+    }
+
+    .admin-container h1 {
+        font-size: 24px;
+    }
+
+    .card .btn {
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+}
+</style>
+
+<div class="admin-container">
+    <h1>Panneau d'administration ALEXSYS</h1>
+
+    <div class="row">
+        <div class="card">
+            <h5 class="card-title">Témoignages</h5>
+            <a href="{% url 'gerer_temoins' %}" class="btn">Accéder</a>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">Formations</h5>
+            <a href="{% url 'gerer_formations' %}" class="btn">Accéder</a>
+        </div>
+
+        <div class="card">
+           <h5 class="card-title">Inscriptions</h5>
+           <a href="{% url 'gerer_inscriptions' %}" class="btn">Accéder</a>
+        </div>
+
+       <div class="card">
+            <h5 class="card-title">Paiements</h5>
+             <a href="{% url 'gerer_paiements' %}" class="btn">Accéder</a>
+        </div>
+
+
+        <div class="card">
+            <h5 class="card-title">Messages</h5>
+            <a href="{% url 'messages_contact' %}" class="btn">Voir les messages</a>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">Blog</h5>
+            <a href="{% url 'gerer_blog' %}" class="btn">Accéder</a>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">Réservations</h5>
+            <a href="{% url 'gerer_reservations' %}" class="btn">Accéder</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

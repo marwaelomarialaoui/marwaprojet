@@ -1,0 +1,95 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<style>
+/* Container centré et propre */
+.container {
+    max-width: 600px;
+    margin: 40px auto 80px auto;
+    background-color: #f9fbfe;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre */
+h2 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Formulaire en colonne avec espacements */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Champs du formulaire */
+form input, form select, form textarea {
+    padding: 14px 18px;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 17px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: inherit;
+    color: #1e293b;
+}
+
+/* Focus avec ombre douce et couleur ALEXSYS */
+form input:focus, form select:focus, form textarea:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 8px rgba(30, 58, 138, 0.3);
+    outline: none;
+}
+
+/* Bouton principal */
+form button {
+    padding: 16px 0;
+    background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+}
+
+/* Hover bouton */
+form button:hover {
+    background: linear-gradient(90deg, #e9a91eff 0%, #e9a91eff 100%);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6);
+}
+
+/* Responsive : plus petit sur mobile */
+@media (max-width: 480px) {
+    .container {
+        margin: 20px 15px 40px 15px;
+        padding: 30px 20px;
+    }
+    h2 {
+        font-size: 24px;
+    }
+    form button {
+        font-size: 18px;
+    }
+}
+</style>
+
+<div class="container">
+  <h2> Réserver un rendez-vous</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Réserver</button>
+  </form>
+</div>
+{% endblock %}

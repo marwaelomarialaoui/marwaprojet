@@ -1,0 +1,239 @@
+{% extends 'home/base.html' %}
+
+{% block title %}{{ formation.titre }}{% endblock %}
+
+{% block content %}
+<style>
+/* Container principal */
+.formation-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+    background-color: #f0f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.formation-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    max-width: 850px;
+    width: 100%;
+    padding: 40px 35px;
+    text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.formation-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Image */
+.formation-card img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 16px;
+    object-fit: cover;
+    margin-bottom: 30px;
+    transition: transform 0.4s ease;
+}
+.formation-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Titres et paragraphes */
+.formation-card h2 {
+    font-size: 36px;
+    color: #1e3a8a;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+.formation-card p {
+    font-size: 16px;
+    color: #5a6268;
+    margin: 10px 0;
+    line-height: 1.7;
+}
+.formation-card strong {
+    color: #5a6268;
+}
+
+/* Badges */
+.mode-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 5px 5px 5px 0;
+    color: #fff;
+}
+.mode-presentiel { background-color: #1e40af; }
+.mode-enligne { background-color: #1e40af; }
+.mode-mixte { background-color: #1e40af; }
+.badge-black { background-color: #5a6268; color: #fff; }
+
+/* Statut publication */
+.status {
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.status.published { color: #28a745; }
+.status.unpublished { color: #dc3545; }
+
+/* Info text */
+.info-text {
+    font-size: 16px;
+    color: #555;
+    margin: 25px 0;
+    line-height: 1.7;
+}
+
+/* Boutons */
+.btn-action {
+    display: inline-block;
+    margin: 12px 10px 0 10px;
+    padding: 14px 30px;
+    border-radius: 16px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.btn-primary {
+    background: linear-gradient(90deg,#28a745,#21a130);
+    color: white;
+}
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    background: linear-gradient(90deg,#21a130,#28a745);
+}
+.btn-success {
+    background: linear-gradient(90deg,#2563eb,#1e40af);
+    color: white;
+}
+.btn-success:hover {
+    transform: translateY(-3px) scale(1.03);
+    background: linear-gradient(90deg,#1e40af,#2563eb);
+}
+
+/* Retour */
+.btn-back {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 28px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+.btn-back:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .formation-card { padding: 30px 20px; }
+    .formation-card h2 { font-size: 28px; }
+    .btn-action { padding: 12px 25px; font-size: 15px; }
+}
+</style>
+
+<div class="formation-container">
+    <div class="formation-card">
+        <h2>{{ formation.titre }}</h2>
+
+        {% if formation.image %}
+        <img src="{{ formation.image.url }}" alt="{{ formation.titre }}">
+        {% endif %}
+
+        <p>{{ formation.description }}</p>
+        <p><strong>Objet :</strong> {{ formation.objet }}</p>
+        <p><strong>Dates :</strong> {{ formation.date_debut }} → {{ formation.date_fin }}</p>
+        <p><strong>Durée :</strong> {{ formation.duree }}</p>
+
+        <p><strong>Trimestre :</strong>
+            {% if formation.trimestre == "1er" %}
+                <span class="mode-badge mode-presentiel">1er trimestre : sept → nov</span>
+            {% elif formation.trimestre == "2eme" %}
+                <span class="mode-badge mode-enligne">2ème trimestre : déc → fév</span>
+            {% elif formation.trimestre == "3eme" %}
+                <span class="mode-badge mode-presentiel">3ème trimestre : mars → mai</span>
+            {% elif formation.trimestre == "4eme" %}
+                <span class="mode-badge mode-enligne">4ème trimestre : juin → août</span>
+            {% elif formation.trimestre == "mixte" %}
+                <span class="mode-badge mode-mixte">Tous les trimestres</span>
+            {% else %}
+                <span class="text-muted">Non précisé</span>
+            {% endif %}
+        </p>
+         <div class="form-group">
+   
+    <select name="trimestre" id="id_trimestre" class="form-control">
+        <option value="">---------</option>
+        <option value="1er" {% if form.instance.trimestre == "1er" %}selected{% endif %}>
+            1er trimestre : septembre → novembre
+        </option>
+        <option value="2ème" {% if form.instance.trimestre == "2ème" %}selected{% endif %}>
+            2ème trimestre : décembre → février
+        </option>
+        <option value="3ème" {% if form.instance.trimestre == "3ème" %}selected{% endif %}>
+            3ème trimestre : mars → mai
+        </option>
+        <option value="4ème" {% if form.instance.trimestre == "4ème" %}selected{% endif %}>
+            4ème trimestre : juin → août
+        </option>
+    </select>
+</div>
+
+
+        <p><strong>Mode :</strong>
+            {% if formation.mode == "presentiel" %}
+                <span class="mode-badge mode-presentiel">Présentiel</span>
+            {% elif formation.mode == "en_ligne" %}
+                <span class="mode-badge mode-enligne">En ligne</span>
+            {% elif formation.mode == "mixte" %}
+                <span class="mode-badge mode-mixte">Présentiel & En ligne</span>
+            {% else %}
+                <span class="text-muted">Non précisé</span>
+            {% endif %}
+        </p>
+           
+
+        <p><strong>Horaire :</strong>
+            {% if formation.horaire %}
+                <span class="badge-black">🕒 {{ formation.horaire }}</span>
+            {% else %}
+                <span class="text-muted">Non précisé</span>
+            {% endif %}
+        </p>
+
+        <p>👥 <strong>Capacité :</strong> {{ formation.capacite }} personnes</p>
+        <p>💰 <strong>Prix :</strong> {{ formation.prix }} MAD</p>
+        <p>📍 <strong>Lieu :</strong> {{ formation.lieu }}</p>
+
+        <p class="info-text">
+            Vous pouvez soit vous inscrire à cette formation pour recevoir toutes les informations, 
+            soit réserver directement votre place. Choisissez l’option qui vous convient le mieux !
+        </p>
+
+        <a href="{% url 'inscription_formation' formation.id %}" class="btn-action btn-primary">
+            S’inscrire →
+        </a>
+        <a href="{% url 'reserver' %}?formation_id={{ formation.id }}" class="btn-action btn-success">
+            Réserver
+        </a>
+
+        {% if formation.publie %}
+            <p class="status published">Publié ✅</p>
+        {% else %}
+            <p class="status unpublished">Non publié ❌</p>
+        {% endif %}
+
+        <a href="{% url 'liste_formations' %}" class="btn-back">← Retour aux formations</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<h1 class="title">Mes Inscriptions</h1>
+
+{% if inscriptions %}
+<div class="inscriptions-container">
+    {% for insc in inscriptions %}
+    <div class="inscription-card 
+        {% if insc.statut == 'valide' %}accepted{% elif insc.statut == 'refuse' %}rejected{% else %}pending{% endif %}">
+        <div class="card-content">
+            <h2>{{ insc.formation.titre }}</h2>
+            <p><strong>Nom :</strong> {{ insc.nom }}</p>
+            <p><strong>Email :</strong> {{ insc.email }}</p>
+            <p><strong>Mode de formation :</strong> {{ insc.mode }}</p>
+            <p><strong>Trimestre :</strong> {{ insc.trimestre }}</p>
+            <p><strong>Date d'inscription:</strong> {{ insc.date_inscription|date:"d/m/Y H:i" }}</p>
+            
+            <p>
+                <strong>Statut:</strong> 
+                {% if insc.statut == 'valide' %}
+                    <span class="statut-text accepted">Validée ✅</span>
+        {% if not insc.paiement_effectue %}
+            <br>
+           <a href="{% url 'choisir_paiement' insc.id %}" class="btn-paiement">
+                💳 Continuer vers paiement
+            </a>
+        {% endif %}
+                {% elif insc.statut == 'refuse' %}
+                    <span class="statut-text rejected">Refusée ❌</span>
+                {% else %}
+                    <span class="statut-text pending">En attente ⏳</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="no-inscriptions">Aucune inscription pour le moment.</p>
+{% endif %}
+
+<style>
+  .btn-paiement {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #1e3a8a;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+.btn-paiement:hover {
+    background: #3746a0;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #03105dff;
+}
+
+.inscriptions-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inscription-card {
+    display: flex;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-left: 8px solid gray; /* couleur par défaut */
+    transition: transform 0.2s ease;
+}
+
+.inscription-card:hover {
+    transform: translateY(-3px);
+}
+
+.card-content h2 {
+    margin: 0 0 10px 0;
+    color: #1e3a8a;
+}
+
+.card-content p {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+/* Couleurs des statuts */
+.inscription-card.accepted {
+    border-left-color: #27ae60; /* vert */
+}
+
+.inscription-card.rejected {
+    border-left-color: #c0392b; /* rouge */
+}
+
+.inscription-card.pending {
+    border-left-color: #d68910; /* orange */
+}
+
+/* Texte des statuts */
+.statut-text.accepted { color: #27ae60; font-weight: 700; }
+.statut-text.rejected { color: #c0392b; font-weight: 700; }
+.statut-text.pending { color: #d68910; font-weight: 700; }
+
+.no-inscriptions {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+</style>
+{% endblock %}

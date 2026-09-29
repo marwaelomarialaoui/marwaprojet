@@ -1,0 +1,111 @@
+{% extends "home/base.html" %}
+{% block content %}
+<h1>Gestion des témoignages</h1>
+
+{% if temoins %}
+  <table class="temoins-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Commentaire</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in temoins %}
+      <tr>
+        <td>{{ t.nom }}</td>
+        <td>{{ t.commentaire }}</td>
+        <td>{{ t.date|date:"d/m/Y H:i" }}</td>
+        <td>
+          <form action="{% url 'accepter_temoin' t.id %}" method="post" style="display:inline">
+            {% csrf_token %}
+            <button class="btn btn-accept">Accepter</button>
+          </form>
+          <form action="{% url 'refuser_temoin' t.id %}" method="post" style="display:inline">
+            {% csrf_token %}
+            <button class="btn btn-refuse">Refuser</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="empty-message">Il n'y a aucun témoignage en attente.</p>
+{% endif %}
+
+<style>
+h1{
+  text-align:center;
+  color:#1e3a8a;
+  font-size:36px;
+  font-weight:700;
+  margin-bottom:40px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.temoins-table {
+  width:90%;
+  max-width:1000px;
+  margin: 0 auto 50px;
+  border-collapse: separate;
+  border-spacing:0 15px;
+  background:#f9fbfe;
+  border-radius:15px;
+  box-shadow:0 8px 25px rgba(30,58,138,.1);
+  overflow:hidden;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.temoins-table thead tr{
+  background:#1e3a8a;
+  color:#fff;
+  font-size:16px;
+  letter-spacing:0.5px;
+}
+.temoins-table th, .temoins-table td{
+  padding:16px 20px;
+  text-align:left;
+  vertical-align:middle;
+}
+.temoins-table tbody tr{
+  background:#fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius:10px;
+}
+.temoins-table tbody tr:hover{
+  transform: translateY(-3px);
+  box-shadow:0 10px 20px rgba(37,99,235,.15);
+}
+.btn{
+  padding:10px 16px;
+  border:none;
+  border-radius:12px;
+  font-weight:600;
+  color:#fff;
+  cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-right:8px;
+}
+.btn-accept{
+  background:linear-gradient(90deg,#16a34a,#22c55e);
+}
+.btn-accept:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 15px rgba(22,163,52,.4);
+}
+.btn-refuse{
+  background:linear-gradient(90deg,#b91c1c,#ef4444);
+}
+.btn-refuse:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 15px rgba(185,28,28,.4);
+}
+.empty-message{
+  text-align:center;
+  color:#64748b;
+  font-size:20px;
+  margin-top:50px;
+}
+</style>
+{% endblock %}

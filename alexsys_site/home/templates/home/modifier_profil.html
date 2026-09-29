@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Profil</title>
+    <link rel="stylesheet" href="{% static 'home/css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        .avatar-preview {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar-preview img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3498db;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        /* Responsive */
+        @media(max-width: 600px) {
+            .avatar-preview {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Modifier votre profil</h1>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="avatar-preview">
+            {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" alt="Avatar actuel">
+            {% else %}
+                <img src="{% static 'home/images/profile.jpeg' %}" alt="Avatar par défaut">
+            {% endif %}
+        </div>
+
+        <div>
+            {{ form.photo.label_tag }}<br>
+            {{ form.photo }}
+        </div>
+
+        <div>
+            {{ form.bio.label_tag }}<br>
+            {{ form.bio }}
+        </div>
+
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+
+    <a href="{% url 'dashboard' %}" class="back-link">← Retour au dashboard</a>
+</div>
+
+</body>
+</html>

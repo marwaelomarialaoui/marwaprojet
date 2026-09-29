@@ -1,0 +1,307 @@
+{% load static %}
+
+{% block extra_head %}
+<style>
+  /* Style global */
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background: #f9fafb;
+    color: #1e293b; /* couleur texte plus douce comme témoignages */
+    margin: 0;
+    padding: 0 20px 40px;
+  }
+
+  /* Header & titre */
+  h1, h2, h3 {
+    color: #1e3a8a; /* bleu foncé du témoignages */
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 90px;
+    margin-bottom: 40px;
+  }
+
+  /* Conteneur principal */
+  .profil {
+    max-width: 700px;
+    margin: 0 auto 80px auto;
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 14px;
+    box-shadow: 0 6px 25px rgba(30, 58, 138, 0.1);
+  }
+
+  /* Carte profil */
+  .profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #2563eb; /* bleu vif */
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
+  }
+
+  .profile-card h2 {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0;
+    color: #1e3a8a;
+  }
+
+  .email {
+    font-size: 16px;
+    color: #64748b; /* gris bleu */
+    margin-top: 6px;
+  }
+
+  /* Bio */
+  .bio {
+    background: #f0f5ff;
+    border-radius: 12px;
+    padding: 20px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+
+  /* Boutons */
+  .btn, .btn-modifier, .btn-action {
+    display: inline-block;
+    background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 25px;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+  }
+
+  .btn:hover, .btn-modifier:hover, .btn-action:hover {
+    background: linear-gradient(90deg, #2563eb 0%, #1e3a8a 100%);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6);
+  }
+
+  /* Liste réservations et messages */
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+  }
+
+  li {
+    background: #fff;
+    border-left: 6px solid #2563eb;
+    padding: 20px 25px 20px 20px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+    position: relative;
+    transition: box-shadow 0.3s ease;
+  }
+
+  li:hover {
+    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.2);
+  }
+
+  strong {
+    color: #1e3a8a;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* Statuts couleur */
+  .statut-vert { color: #27ae60; font-weight: 700; }
+  .statut-rouge { color: #c0392b; font-weight: 700; }
+  .statut-jaune { color: #d68910; font-weight: 700; }
+
+  a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 15px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+      header {
+      background-color: rgba(72, 118, 163, 1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 30px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #cce6ff;
+    }
+
+    .btn-contact {
+      background-color: rgba(66, 111, 156, 1);
+      color: white;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-contact:hover {
+      background-color: rgb(107, 157, 206);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 20px;
+      }
+
+      .nav-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      nav {
+        flex-direction: column;
+        width: 100%;
+      }
+    }
+
+    main {
+      padding-top: 90px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header>
+    <div class="logo-container">
+      <h1><a href="{% url 'index' %}" style="color: white; text-decoration: none;">ALEXSYS SOLUTIONS</a></h1>
+    </div>
+    <div class="nav-actions">
+      <nav>
+        <a href="{% url 'index' %}">Accueil</a>
+        <a href="{% url 'reserver' %}">Réserver</a>
+        <a href="{% url 'temoins' %}">Témoignages</a>
+        <a href="{% url 'blog_list' %}">Blog</a>
+        <a href="{% url 'liste_formations' %}">Nos Formations</a>
+        <a href="{% url 'admin_panel' %}">Admin Panel</a>
+    
+        <a href="{% url 'dashboard' %}">user</a>
+      </nav>
+      <a href="{% url 'contact' %}" class="btn-contact">📞 Nous Contacter</a>
+    </div>
+  </header>
+
+<div class="profil section">
+  <h1>Bienvenue, Marwa</h1>
+
+  <div class="profile-card">
+    {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="Avatar" class="profile-avatar">
+    {% else %}
+        <img src="{% static 'home/images/profile.jpeg' %}" alt="Avatar" class="profile-avatar">
+    {% endif %}
+    <div>
+        <h2>Marwa Elomari Aloui</h2>
+        <p class="email">marwaaloui2004@gmail.com</p>
+        <a href="{% url 'user_logout' %}" ...>Déconnexion</a>
+
+    </div>
+</div>
+
+<div class="bio">
+    <h3>Bio</h3>
+    {% if profile.bio %}
+        <p>{{ profile.bio }}</p>
+    {% else %}
+        <p>Aucune bio pour le moment.</p>
+    {% endif %}
+</div>
+
+  <a href="{% url 'modifier_profil' %}" class="btn btn-modifier">Modifier mon profil</a>
+
+  <!-- Réservations -->
+  <h2>Mes Réservations</h2>
+<a href="{% url 'mes_reservations' %}" class="btn btn-primary">
+    📋 Consulter toutes mes réservations
+</a>
+
+  <!-- Messages -->
+  <h2>Messages & Notifications</h2>
+<a href="{% url 'mes_messages' %}" class="btn btn-primary">
+    📨 Consulter mes messages & notifications
+</a>
+<!-- Inscriptions -->
+<h2>Mes Inscriptions</h2>
+<a href="{% url 'mes_inscriptions' %}" class="btn btn-primary">
+    📝 Mes Inscriptions
+</a>
+
+
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<style>
+body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.container-table {
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+thead {
+    background-color: #1e3a8a;
+    color: #fff;
+}
+thead th {
+    padding: 15px;
+    text-align: left;
+}
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tbody tr:hover {
+    background-color: #e0e7ff;
+}
+tbody td {
+    padding: 12px 15px;
+}
+.status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: #111010ff;
+}
+.status.Acceptee {
+    background-color: #28a745;
+}
+.status.Refusee {
+    background-color: #dc3545;
+}
+.btn-action {
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.btn-accepter {
+    background-color: #28a745;
+}
+.btn-accepter:hover {
+    background-color: #1e7e34;
+    transform: translateY(-2px);
+}
+.btn-refuser {
+    background-color: #dc3545;
+}
+.btn-refuser:hover {
+    background-color: #a71d2a;
+    transform: translateY(-2px);
+}
+.no-inscriptions {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    padding: 20px 0;
+}
+</style>
+
+<div class="container-table">
+    <h1>Gérer les Inscriptions</h1>
+    <table>
+        <thead>
+            <tr>
+                 <th>Nom</th>
+                 <th>Email</th>
+                 <th>Formation</th>
+                 <th>Mode</th> 
+                 <th>Trimestre</th>
+                 <th>Date inscription</th>
+                 <th>Statut</th>
+                 <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if inscriptions %}
+                {% for insc in inscriptions %}
+                <tr>
+                    <td>{{ insc.nom }}</td>
+                    <td>{{ insc.email }}</td>
+                    <td>{{ insc.formation.titre }}</td>
+                      <td>{{ insc.get_mode_display }}</td>
+                    <td>{{ insc.get_trimestre_display }}</td>
+                   
+
+
+
+                    <td>{{ insc.date_inscription }}</td>
+                    <td>
+                        <span class="status {{ insc.statut|title }}">
+                            {{ insc.statut }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'accepter_inscription' insc.id %}" class="btn-action btn-accepter">Accepter</a>
+                        <a href="{% url 'refuser_inscription' insc.id %}" class="btn-action btn-refuser">Refuser</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" class="no-inscriptions">Aucune inscription pour le moment.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
